@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+[README.md](https://github.com/user-attachments/files/21843227/README.md)
+>>>>>>> 08ddf8c707e4af1cfcc508501d158797c27fd1c1
 # CortexaLab Website
 
 A modern, responsive website for CortexaLab Pvt Ltd featuring a dark AI theme with cutting-edge design and interactive elements.
