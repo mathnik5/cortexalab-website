@@ -4,7 +4,7 @@ import CompanyFacts from '../components/CompanyFacts.astro';
 import Cta from '../components/Cta.astro';
 import Icon from '../components/Icon.astro';
 
-import { site, placeholders } from '../data/site';
+import { site, placeholders, addressParts } from '../data/site';
 import { links } from '../data/links';
 import { process } from '../data/company';
 
@@ -16,12 +16,14 @@ const orgJsonLd = {
   url: site.domain,
   logo: `${site.domain}/logo.png`,
   email: placeholders.email.value,
+  telephone: placeholders.phone.value,
+  foundingDate: placeholders.founded.value,
   founder: { '@type': 'Person', name: site.founder },
-  address: { '@type': 'PostalAddress', addressCountry: 'IN', streetAddress: placeholders.address.value },
+  address: { '@type': 'PostalAddress', ...addressParts },
   sameAs: [links.planneat.site, links.planneat.googlePlay, links.planneat.appStore],
 };
 
-const title = `How we build — ${site.wordmark}`;
+const title = `How we build | ${site.wordmark}`;
 const description =
   'CortexaLab is a lean, AI-native studio: one founder, an AI-augmented production pipeline, and real apps shipping on two app stores.';
 ---
@@ -31,7 +33,7 @@ const description =
       <p class="eyebrow">How we build</p>
       <h1 class="ahead__h">How we build</h1>
       <p class="lead">
-        A modern, lean studio with enormous leverage — and a human in control of
+        A modern, lean studio with enormous leverage, and a human in control of
         every decision.
       </p>
     </div>
@@ -42,7 +44,7 @@ const description =
       <p>
         CortexaLab is deliberately small. {site.founder} designs, builds, and ships
         every product, working alongside modern AI tools as a full production team.
-        It is a new way to make software — lean, fast, and AI-native from the first
+        It is a new way to make software: lean, fast, and AI-native from the first
         line of code to the last pixel.
       </p>
       <p>
@@ -53,7 +55,7 @@ const description =
       </p>
       <p>
         That leverage is why one person can ship polished, store-grade apps on both
-        Google Play and the App Store — and keep shipping. We think this is what the
+        Google Play and the App Store, and keep shipping. We think this is what the
         next generation of software companies looks like: small teams doing a few
         things exceptionally well.
       </p>

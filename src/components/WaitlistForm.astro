@@ -1,0 +1,106 @@
+---
+import { waitlistForm } from '../data/site';
+import Icon from './Icon.astro';
+
+const configured = waitlistForm.accessKey.length > 0;
+---
+{configured ? (
+  <form class="wl" data-waitlist data-endpoint={waitlistForm.endpoint}>
+    <input type="hidden" name="access_key" value={waitlistForm.accessKey} />
+    <input type="hidden" name="subject" value={waitlistForm.subject} />
+    <input type="hidden" name="from_name" value="CortexaLab waitlist" />
+    {/* Honeypot: real users never see/fill this; bots do. */}
+    <input
+      type="checkbox"
+      name="botcheck"
+      class="wl__hp"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+    />
+    <div class="wl__row">
+      <label class="visually-hidden" for="wl-email">Email address</label>
+      <input
+        id="wl-email"
+        class="wl__input"
+        type="email"
+        name="email"
+        required
+        placeholder="you@example.com"
+        autocomplete="email"
+      />
+      <button type="submit" class="wl__btn">
+        <span>Join the waitlist</span>
+        <Icon name="arrow-right" size={16} />
+      </button>
+    </div>
+    <p class="wl__msg" data-waitlist-msg role="status" aria-live="polite"></p>
+  </form>
+) : (
+  <a class="wl__btn wl__btn--solo" href={waitlistForm.fallbackMailto}>
+    <Icon name="mail" size={16} />
+    <span>Join the waitlist</span>
+  </a>
+)}
+
+<style>
+  .wl {
+    max-width: 480px;
+  }
+  /* Honeypot kept out of view and out of the tab order. */
+  .wl__hp {
+    position: absolute !important;
+    left: -9999px;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .wl__row {
+    display: flex;
+    gap: var(--sp-3);
+    flex-wrap: wrap;
+  }
+  .wl__input {
+    flex: 1 1 220px;
+    padding: 0.75rem 1.1rem;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--c-border-strong);
+    background: var(--c-surface);
+    color: var(--c-text);
+    font-size: var(--fs-small);
+    transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  }
+  .wl__input::placeholder { color: var(--c-text-muted); }
+  .wl__input:focus-visible {
+    outline: none;
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 3px rgba(109, 94, 246, 0.18);
+  }
+  .wl__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1.35rem;
+    border-radius: var(--r-pill);
+    background: var(--c-accent);
+    color: #fff;
+    border: 0;
+    font-family: var(--ff-body);
+    font-weight: 500;
+    font-size: var(--fs-small);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  }
+  .wl__btn:hover:not(:disabled) { background: var(--c-accent-700); color: #fff; transform: translateY(-1px); }
+  .wl__btn:disabled { opacity: 0.65; cursor: default; }
+  .wl__btn--solo { text-decoration: none; }
+  .wl__msg {
+    margin-top: var(--sp-3);
+    font-size: var(--fs-small);
+    min-height: 1.2em;
+    color: var(--c-text-muted);
+  }
+  .wl__msg.is-ok { color: var(--c-success); }
+  .wl__msg.is-err { color: #d23f3f; }
+</style>

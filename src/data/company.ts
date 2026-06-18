@@ -21,7 +21,7 @@ export const process = [
   {
     n: '01',
     title: 'Design with AI',
-    body: 'Shape the product, flows and copy fast — exploring more options than a small team normally could.',
+    body: 'Use AI to design the product, its screens, and its words, exploring far more ideas than one person could alone.',
   },
   {
     n: '02',
@@ -44,7 +44,7 @@ export const capabilities = [
   {
     icon: 'home',
     title: 'Built for real routines',
-    body: 'We solve concrete daily problems for ordinary people — what to cook, how to keep a habit — not abstract enterprise workflows.',
+    body: 'We solve concrete daily problems for ordinary people (what to cook, how to keep a habit), not abstract enterprise workflows.',
   },
   {
     icon: 'gem',

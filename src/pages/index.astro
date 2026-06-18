@@ -10,7 +10,7 @@ import Badge from '../components/Badge.astro';
 import NeuralBackdrop from '../components/NeuralBackdrop.astro';
 import PhoneMockup from '../components/PhoneMockup.astro';
 
-import { site, placeholders } from '../data/site';
+import { site, placeholders, addressParts } from '../data/site';
 import { links } from '../data/links';
 import { products } from '../data/products';
 import { stats, process, capabilities } from '../data/company';
@@ -23,16 +23,14 @@ const orgJsonLd = {
   url: site.domain,
   logo: `${site.domain}/logo.png`,
   email: placeholders.email.value,
+  telephone: placeholders.phone.value,
+  foundingDate: placeholders.founded.value,
   founder: { '@type': 'Person', name: site.founder },
-  address: {
-    '@type': 'PostalAddress',
-    addressCountry: 'IN',
-    streetAddress: placeholders.address.value,
-  },
+  address: { '@type': 'PostalAddress', ...addressParts },
   sameAs: [links.planneat.site, links.planneat.googlePlay, links.planneat.appStore],
 };
 
-const title = 'CortexaLab — AI-native productivity tools';
+const title = 'CortexaLab | AI-native productivity tools';
 const description = site.description;
 ---
 <BaseLayout title={title} description={description} jsonLd={orgJsonLd}>
@@ -45,7 +43,7 @@ const description = site.description;
         <h1 class="hero__h1">AI-native tools for the friction of everyday life.</h1>
         <p class="lead hero__lead">
           CortexaLab is a one-founder studio building productivity apps where AI
-          does the tedious thinking — so you don't have to. We build the software,
+          does the tedious thinking, so you don't have to. We build the software,
           and we use AI to build it, end to end.
         </p>
         <div class="hero__actions">
@@ -53,7 +51,7 @@ const description = site.description;
           <Button href="/about" variant="secondary">How we build</Button>
         </div>
         <p class="hero__trust">
-          Makers of {site.appName} — live on Google Play and the App Store.
+          Makers of {site.appName}, live on Google Play and the App Store.
         </p>
       </div>
       <div class="hero__visual" data-reveal>
@@ -80,7 +78,7 @@ const description = site.description;
       <SectionHeader
         eyebrow="What we do"
         title="We turn everyday friction into quiet, intelligent software."
-        lead="Most days are full of small, repetitive decisions that drain time and attention. CortexaLab builds focused apps that take those decisions off your plate using AI — then get out of your way. No bloat, no dashboards to manage, no gimmicks."
+        lead="Most days are full of small, repetitive decisions that drain time and attention. CortexaLab builds focused apps that take those decisions off your plate using AI, then get out of your way. No bloat, no dashboards to manage, no gimmicks."
       />
       <div class="cap__grid" data-reveal-stagger>
         {capabilities.map((c) => (
@@ -118,12 +116,12 @@ const description = site.description;
         <div class="studio__prose" data-reveal>
           <p class="lead">
             CortexaLab is deliberately small. A single founder designs, builds, and
-            ships every product — working alongside modern AI coding tools as a full
+            ships every product, working alongside modern AI coding tools as a full
             production team. It's a new way to make software: lean, fast, and
             AI-native from the first line of code to the last pixel.
           </p>
           <p>
-            AI doesn't just live inside our apps — it's how we make them. Product
+            AI doesn't just live inside our apps; it's how we make them. Product
             design, engineering, copy, and release work are all AI-augmented, using
             tools like Codex, Cursor, and Claude Code. That's how one person ships
             polished, store-grade apps on two platforms, and keeps shipping.

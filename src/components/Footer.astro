@@ -6,10 +6,10 @@ import { links } from '../data/links';
   <div class="container footer__inner">
     <div class="footer__brand">
       <a href="/" class="brand" aria-label={`${site.wordmark} home`}>
-        <span class="brand__glyph" aria-hidden="true"></span>
+        <img src="/logo.png" alt="" width="34" height="34" class="brand__logo" />
         <span class="brand__word">{site.wordmark}</span>
       </a>
-      <p class="footer__tag">{site.wordmark} — {site.tagline}</p>
+      <p class="footer__tag">{site.wordmark}: {site.tagline}</p>
     </div>
 
     <nav class="footer__cols" aria-label="Footer">
@@ -61,11 +61,14 @@ import { links } from '../data/links';
     font-size: 1.15rem;
   }
   .brand:hover { color: var(--c-text-onink); }
-  .brand__glyph {
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
-    background: var(--grad-cortex);
+  .brand__logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    flex: none;
+    padding: 4px;
+    border-radius: 9px;
+    background: var(--c-surface);
   }
   .footer__tag {
     margin-top: var(--sp-3);

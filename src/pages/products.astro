@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import Cta from '../components/Cta.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
 import Icon from '../components/Icon.astro';
 
 import { site } from '../data/site';
@@ -20,7 +21,7 @@ const swJsonLd = {
   publisher: { '@type': 'Organization', name: site.legalName },
 };
 
-const title = `Products — ${site.wordmark}`;
+const title = `Products | ${site.wordmark}`;
 const description =
   "Focused apps that take everyday decisions off your plate. PlanNEat is live on Google Play and the App Store; a second app is in alpha.";
 ---
@@ -31,7 +32,7 @@ const description =
       <h1 class="phead__h">Products</h1>
       <p class="lead">
         Focused apps that take everyday decisions off your plate. Here's what
-        we've shipped — and what's next.
+        we've shipped, and what's next.
       </p>
     </div>
   </section>
@@ -59,24 +60,34 @@ const description =
     </div>
   </section>
 
-  <!-- Habit app expanded (placeholder) -->
+  <!-- Habit app expanded -->
   <section class="section">
     <div class="container">
+      <header class="soon__head" data-reveal>
+        <p class="eyebrow">Next from the studio</p>
+        <h2 class="h2">One app for tasks, habits, and time.</h2>
+      </header>
       <div class="soon" data-reveal>
         <div class="soon__card">
           <ProductCard product={habitApp} placement="products" />
         </div>
         <div class="soon__copy">
-          <h2 class="h3">What's next</h2>
-          <p>
-            Our second product is an AI-assisted habit tracker, currently in alpha.
-            Full capabilities and a name will be announced here — the founder is
-            shaping it now.
-          </p>
-          <p class="soon__placeholder">
-            Capabilities and differentiators to be provided. This block is a
-            placeholder until the alpha is ready to show.
-          </p>
+          <ul class="flist">
+            {habitApp.features?.map((f) => (
+              <li class="fitem">
+                <Icon name="check" size={18} class="fitem__i" />
+                <div>
+                  <strong>{f.title}</strong>
+                  <span>{f.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div class="soon__cta" id="waitlist">
+            <p class="soon__waitlabel">Want it when it lands?</p>
+            <WaitlistForm />
+            <p class="soon__note">Early, honest, and in active development. We'll email you when it's ready to try.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -104,10 +115,13 @@ const description =
   .fitem strong { display: block; font-size: var(--fs-body); }
   .fitem span { color: var(--c-text-muted); font-size: var(--fs-small); }
 
+  .soon__head { max-width: 620px; margin-bottom: var(--sp-12); }
+  .soon__head h2 { margin: var(--sp-3) 0 var(--sp-4); }
   .soon { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: start; }
-  .soon__copy h2 { margin-bottom: var(--sp-4); }
-  .soon__copy p { color: var(--c-text-muted); margin-bottom: var(--sp-4); }
-  .soon__placeholder { font-style: italic; }
+  .soon__card { position: sticky; top: 96px; }
+  .soon__cta { margin-top: var(--sp-8); scroll-margin-top: 96px; }
+  .soon__waitlabel { font-weight: 500; margin-bottom: var(--sp-3); }
+  .soon__note { color: var(--c-text-muted); font-size: var(--fs-small); margin-top: var(--sp-3); max-width: 42ch; }
 
   @media (max-width: 820px) {
     .detail, .soon { grid-template-columns: 1fr; gap: var(--sp-8); }

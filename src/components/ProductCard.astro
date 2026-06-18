@@ -30,7 +30,7 @@ const storeKey = (label: string): string | undefined => {
   </ul>
 
   {product.isPlaceholder && (
-    <p class="pcard__note">Details coming soon — full capabilities to be announced.</p>
+    <p class="pcard__note">Details coming soon. Full capabilities to be announced.</p>
   )}
 
   {product.cta && product.cta.length > 0 && (
@@ -51,6 +51,15 @@ const storeKey = (label: string): string | undefined => {
           </a>
         );
       })}
+    </div>
+  )}
+
+  {product.waitlist && (
+    <div class="pcard__cta">
+      <a href={product.waitlist} class="pwait" data-placement={`waitlist-${placement}`}>
+        <Icon name="mail" size={16} />
+        <span>Join the waitlist</span>
+      </a>
     </div>
   )}
 </article>
@@ -140,4 +149,17 @@ const storeKey = (label: string): string | undefined => {
     font-size: var(--fs-small);
     font-weight: 500;
   }
+  .pwait {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--r-pill);
+    background: var(--c-accent);
+    color: #fff;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  }
+  .pwait:hover { background: var(--c-accent-700); color: #fff; transform: translateY(-1px); }
 </style>
