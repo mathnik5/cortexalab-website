@@ -1,0 +1,54 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  updated: string;
+}
+const { title, description, heading, updated } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <section class="legal section">
+    <div class="container legal__inner">
+      <header class="legal__head" data-reveal>
+        <p class="eyebrow">Legal</p>
+        <h1 class="h2">{heading}</h1>
+        <p class="legal__meta">Effective date: {updated}</p>
+      </header>
+      <div class="legal__body" data-reveal>
+        <slot />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal__inner { max-width: 760px; }
+  .legal__head { margin-bottom: var(--sp-8); }
+  .legal__head h1 { margin-top: var(--sp-2); }
+  .legal__meta {
+    margin-top: var(--sp-3);
+    color: var(--c-text-muted);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-small);
+  }
+  .legal__body :global(h2) {
+    font-size: var(--fs-h3);
+    margin-top: var(--sp-8);
+    margin-bottom: var(--sp-3);
+  }
+  .legal__body :global(p) {
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-4);
+  }
+  .legal__body :global(ul) {
+    color: var(--c-text-muted);
+    margin: 0 0 var(--sp-4) 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .legal__body :global(a) { font-weight: 500; }
+</style>

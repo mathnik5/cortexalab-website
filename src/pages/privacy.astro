@@ -1,0 +1,58 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site, placeholders } from '../data/site';
+import { links } from '../data/links';
+
+const title = `Privacy Policy — ${site.wordmark}`;
+const description = `How ${site.legalName} handles information on the CortexaLab company website.`;
+---
+<LegalLayout
+  title={title}
+  description={description}
+  heading="Privacy Policy"
+  updated={placeholders.legalEffectiveDate.value}
+>
+  <p>
+    This policy explains how {site.legalName} ("CortexaLab", "we") handles
+    information in connection with this company website at cortexalab.com. It
+    covers the website only. Each of our products has its own privacy policy that
+    governs the data that product collects.
+  </p>
+
+  <h2>Who we are</h2>
+  <p>
+    {site.legalName} is a private limited company registered in India. We build and
+    operate consumer software products, including {site.appName}. You can contact us
+    at {placeholders.email.value}.
+  </p>
+
+  <h2>What this website collects</h2>
+  <p>
+    This is a static marketing website. It has no user accounts, no login, and no
+    forms that store personal data. We use privacy-respecting analytics (Google
+    Analytics 4) to understand aggregate, non-identifying usage — for example which
+    pages are viewed and which outbound links are clicked. Analytics may set
+    cookies or use similar technologies in your browser.
+  </p>
+
+  <h2>Our products' data</h2>
+  <p>
+    Information handled inside our apps is governed by each product's own privacy
+    policy, not this one. For {site.appName}, see the privacy policy at
+    <a href={links.planneat.site} target="_blank" rel="noopener noreferrer">planneat.in</a>,
+    which covers the app's specific data handling.
+  </p>
+
+  <h2>Data requests</h2>
+  <p>
+    For any question or request about data on this website, email
+    {placeholders.email.value} and we will respond.
+  </p>
+
+  <h2>Governing law</h2>
+  <p>
+    This policy is governed by the laws of {placeholders.jurisdiction.value}. We may
+    update it from time to time; the effective date above reflects the latest
+    version.
+  </p>
+</LegalLayout>

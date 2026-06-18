@@ -1,0 +1,7 @@
+/* Self-hosted fonts via @fontsource (imported in BaseLayout frontmatter).
+   This file documents the families/weights in use; the actual @font-face
+   declarations are pulled in by the @fontsource CSS imports. */
+
+/* Space Grotesk — display / headings: 500, 600, 700
+   Inter           — body / UI:         400, 500
+   JetBrains Mono  — mono eyebrows:      500 */

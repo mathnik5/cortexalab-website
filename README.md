@@ -1,178 +1,55 @@
-<<<<<<< HEAD
-=======
-[README.md](https://github.com/user-attachments/files/21843227/README.md)
->>>>>>> 08ddf8c707e4af1cfcc508501d158797c27fd1c1
 # CortexaLab Website
 
-A modern, responsive website for CortexaLab Pvt Ltd featuring a dark AI theme with cutting-edge design and interactive elements.
+The company website for **CortexaLab Pvt Ltd** — an independent, AI-native product
+studio and the maker of **PlanNEat**. Built as a fast, static, multi-page site with
+a distinct "AI studio" identity (ink + indigo), deployed to `cortexalab.com`.
 
-## 🚀 Features
+## Tech stack
 
-- **Dark AI Theme**: Modern dark design with electric blue and purple accents
-- **Fully Responsive**: Works perfectly on desktop, tablet, and mobile devices
-- **Interactive Elements**: Smooth animations, hover effects, and particle animations
-- **Contact Form**: Functional contact form with validation and notifications
-- **Smooth Scrolling**: Seamless navigation between sections
-- **Modern Typography**: Clean, professional font styling
-- **Loading Animations**: Staggered animations for enhanced user experience
+- **Astro** (`output: 'static'`, TypeScript strict) + `@astrojs/sitemap`
+- **Vanilla CSS** with custom-property design tokens (no Tailwind)
+- **Self-hosted fonts** via `@fontsource` (Space Grotesk, Inter, JetBrains Mono)
+- Inline **Lucide** icons; scroll-reveal via IntersectionObserver
+- **GitHub Pages** deploy (GitHub Actions)
 
-## 📁 File Structure
+## Local development
 
-```
-CortexaLab Website/
-├── index.html          # Main HTML file
-├── styles.css          # CSS styling and animations
-├── script.js           # JavaScript functionality
-└── README.md           # This file
-```
-
-## 🎨 Design Features
-
-### Color Scheme
-- **Primary Background**: Deep dark (#0a0a0a, #111111)
-- **Accent Colors**: Electric blue (#00d4ff), Purple (#6366f1)
-- **Text Colors**: White, light grays for readability
-- **Gradients**: Modern gradient combinations for visual appeal
-
-### Typography
-- **Font Family**: Inter (Google Fonts)
-- **Weights**: 300, 400, 500, 600, 700, 800
-- **Responsive**: Scales appropriately across devices
-
-### Animations
-- **Particle Effects**: Floating particles in hero section
-- **Scroll Animations**: Elements animate in as you scroll
-- **Hover Effects**: Interactive card and button animations
-- **Loading Animations**: Staggered element loading
-
-## 🛠️ Customization
-
-### Colors
-To change the color scheme, modify the CSS variables in `styles.css`:
-
-```css
-:root {
-    --bg-primary: #0a0a0a;        /* Main background */
-    --accent-primary: #00d4ff;    /* Primary accent */
-    --accent-purple: #6366f1;     /* Secondary accent */
-    /* ... other colors */
-}
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # outputs to dist/
+npm run preview   # serve the production build
 ```
 
-### Content
-Update the content in `index.html`:
-- Company information in the hero section
-- Service descriptions in respective sections
-- Contact information in the footer
-- Form fields in the contact section
+## Project structure
 
-### Images
-To add images:
-1. Create an `images/` folder
-2. Add your images
-3. Update the HTML to reference them
+```
+src/
+├── pages/        index, products, about, contact, privacy, terms, 404
+├── layouts/      BaseLayout.astro, LegalLayout.astro
+├── components/   Nav, Footer, Hero pieces, ProductCard, CompanyFacts, Cta, …
+├── data/         site.ts, links.ts, products.ts, company.ts, faq.ts  ← edit content here
+├── styles/       tokens.css, fonts.css, global.css
+└── scripts/      reveal.ts (reveal + sticky nav + mobile menu + store-click events)
+public/           CNAME, robots.txt, favicon/apple-touch/og, logo
+```
 
-### Fonts
-To change fonts:
-1. Update the Google Fonts link in `index.html`
-2. Modify the font-family in `styles.css`
+All copy, links, and company facts live in `src/data/` — edit those, not the markup.
 
-## 📱 Responsive Design
+## Filling placeholders
 
-The website is fully responsive with breakpoints at:
-- **Desktop**: 1200px and above
-- **Tablet**: 768px - 1199px
-- **Mobile**: Below 768px
+Legitimacy and contact details ship as clearly-marked placeholders. Update them in
+one place: **`src/data/site.ts`** (`placeholders` object — CIN, registered address,
+phone, founded year, company email, jurisdiction, legal effective date) and flip
+`analytics.enabled` once a **new** GA4 Measurement ID is issued (do not reuse
+PlanNEat's). The habit-tracker product copy lives in `src/data/products.ts`.
 
-## 🚀 Deployment
+## Deployment (GitHub Pages)
 
-### Local Development
-1. Open `index.html` in your web browser
-2. Or use a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   ```
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the Astro site
+and publishes `dist/` to GitHub Pages. The custom domain is set via `public/CNAME`
+(`cortexalab.com`), which is copied into the build output.
 
-### Web Hosting
-Upload the files to your web hosting provider:
-- **Shared Hosting**: Upload via FTP/cPanel
-- **Vercel**: Drag and drop the folder
-- **Netlify**: Connect your repository or upload files
-- **GitHub Pages**: Push to a repository and enable Pages
-
-## 🔧 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
-
-## 📞 Contact Form
-
-The contact form includes:
-- **Validation**: Email format and required fields
-- **Notifications**: Success/error messages
-- **Simulation**: Currently simulates form submission
-- **Integration**: Ready for backend integration
-
-To connect to a real backend:
-1. Update the form action in `index.html`
-2. Modify the form handling in `script.js`
-3. Add your server endpoint
-
-## 🎯 SEO Optimization
-
-The website includes:
-- Semantic HTML structure
-- Meta tags for social sharing
-- Proper heading hierarchy
-- Alt text for images (when added)
-- Fast loading times
-
-## 🔒 Security
-
-- Form validation on both client and server side
-- XSS protection through proper input sanitization
-- HTTPS recommended for production
-
-## 📈 Performance
-
-- Optimized CSS and JavaScript
-- Minimal external dependencies
-- Fast loading animations
-- Efficient DOM manipulation
-
-## 🤝 Contributing
-
-To customize or extend the website:
-
-1. **Fork** the repository
-2. **Create** a feature branch
-3. **Make** your changes
-4. **Test** across different devices
-5. **Submit** a pull request
-
-## 📄 License
-
-This project is created for CortexaLab Pvt Ltd. All rights reserved.
-
-## 🆘 Support
-
-For technical support or customization requests:
-- Check the code comments for guidance
-- Review the CSS variables for easy customization
-- Test changes across different browsers and devices
-
-## 🎉 Getting Started
-
-1. **Download** or **clone** the files
-2. **Open** `index.html` in your browser
-3. **Customize** the content and styling as needed
-4. **Deploy** to your web hosting provider
-
-The website is ready to use and can be easily customized to match your specific needs!
+> **One-time setup:** in the GitHub repo, go to **Settings → Pages → Build and
+> deployment → Source** and select **GitHub Actions**. This switches Pages from the
+> old "deploy from a branch" mode to the Actions workflow above.

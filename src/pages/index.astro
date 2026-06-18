@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ProductCard from '../components/ProductCard.astro';
+import CompanyFacts from '../components/CompanyFacts.astro';
+import Cta from '../components/Cta.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import Badge from '../components/Badge.astro';
+import NeuralBackdrop from '../components/NeuralBackdrop.astro';
+import PhoneMockup from '../components/PhoneMockup.astro';
+
+import { site, placeholders } from '../data/site';
+import { links } from '../data/links';
+import { products } from '../data/products';
+import { stats, process, capabilities } from '../data/company';
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  alternateName: site.wordmark,
+  url: site.domain,
+  logo: `${site.domain}/logo.png`,
+  email: placeholders.email.value,
+  founder: { '@type': 'Person', name: site.founder },
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'IN',
+    streetAddress: placeholders.address.value,
+  },
+  sameAs: [links.planneat.site, links.planneat.googlePlay, links.planneat.appStore],
+};
+
+const title = 'CortexaLab — AI-native productivity tools';
+const description = site.description;
+---
+<BaseLayout title={title} description={description} jsonLd={orgJsonLd}>
+  <!-- 7.2 Hero -->
+  <section class="hero">
+    <NeuralBackdrop variant="light" />
+    <div class="container hero__inner">
+      <div class="hero__copy" data-reveal-stagger>
+        <p class="eyebrow">An independent AI product studio</p>
+        <h1 class="hero__h1">AI-native tools for the friction of everyday life.</h1>
+        <p class="lead hero__lead">
+          CortexaLab is a one-founder studio building productivity apps where AI
+          does the tedious thinking — so you don't have to. We build the software,
+          and we use AI to build it, end to end.
+        </p>
+        <div class="hero__actions">
+          <Button href="#products" variant="primary" icon="arrow-down">Explore our products</Button>
+          <Button href="/about" variant="secondary">How we build</Button>
+        </div>
+        <p class="hero__trust">
+          Makers of {site.appName} — live on Google Play and the App Store.
+        </p>
+      </div>
+      <div class="hero__visual" data-reveal>
+        <PhoneMockup />
+      </div>
+    </div>
+  </section>
+
+  <!-- 7.3 Stat strip -->
+  <section class="stats">
+    <div class="container stats__grid" data-reveal-stagger>
+      {stats.map((s) => (
+        <div class="stat">
+          <span class="stat__value">{s.value}</span>
+          <span class="stat__label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 7.4 What we build -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        eyebrow="What we do"
+        title="We turn everyday friction into quiet, intelligent software."
+        lead="Most days are full of small, repetitive decisions that drain time and attention. CortexaLab builds focused apps that take those decisions off your plate using AI — then get out of your way. No bloat, no dashboards to manage, no gimmicks."
+      />
+      <div class="cap__grid" data-reveal-stagger>
+        {capabilities.map((c) => (
+          <div class="cap">
+            <span class="cap__icon"><Icon name={c.icon} size={22} /></span>
+            <h3 class="cap__title">{c.title}</h3>
+            <p class="cap__body">{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7.5 Products -->
+  <section id="products" class="section section--alt">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Our products"
+        title="Apps that are already in people's hands."
+      />
+      <div class="prod__grid" data-reveal-stagger>
+        {products.map((p) => <ProductCard product={p} placement="home" />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7.6 How we build -->
+  <section class="section studio">
+    <div class="container studio__inner">
+      <div class="studio__copy">
+        <SectionHeader
+          eyebrow="How we build"
+          title="One founder. A stack of AI copilots. Apps that actually ship."
+        />
+        <div class="studio__prose" data-reveal>
+          <p class="lead">
+            CortexaLab is deliberately small. A single founder designs, builds, and
+            ships every product — working alongside modern AI coding tools as a full
+            production team. It's a new way to make software: lean, fast, and
+            AI-native from the first line of code to the last pixel.
+          </p>
+          <p>
+            AI doesn't just live inside our apps — it's how we make them. Product
+            design, engineering, copy, and release work are all AI-augmented, using
+            tools like Codex, Cursor, and Claude Code. That's how one person ships
+            polished, store-grade apps on two platforms, and keeps shipping.
+          </p>
+          <p>
+            We think this is what the next generation of software companies looks
+            like: small teams with enormous leverage, focused on doing a few things
+            exceptionally well.
+          </p>
+          <p class="studio__honesty">
+            <Icon name="check" size={16} /> AI assists; the founder stays in control.
+            Every decision is human-reviewed.
+          </p>
+        </div>
+      </div>
+
+      <ol class="steps" data-reveal-stagger>
+        {process.map((step) => (
+          <li class="step">
+            <span class="step__n">{step.n}</span>
+            <div>
+              <h3 class="step__title">{step.title}</h3>
+              <p class="step__body">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7.7 Why AI-native -->
+  <section class="section belief">
+    <div class="container belief__inner" data-reveal>
+      <p class="eyebrow">Our approach</p>
+      <h2 class="h2 belief__h">Software should think, so you don't have to.</h2>
+      <p class="lead belief__lead">
+        We believe the best everyday tools quietly absorb effort. Each CortexaLab
+        app is built around a simple test: does the AI remove a real chore, or is
+        it just there for show? If it's the latter, it doesn't ship.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7.8 Company / legitimacy -->
+  <section class="section section--alt">
+    <div class="container">
+      <SectionHeader eyebrow="The company" title={site.legalName} />
+      <CompanyFacts />
+    </div>
+  </section>
+
+  <!-- 7.9 Final CTA -->
+  <Cta
+    title="Built with intelligence. Designed for everyday life."
+    lead="See what an AI-native studio can ship."
+  />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 7vw, 6rem) clamp(3rem, 7vw, 5rem);
+  }
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--sp-12);
+    align-items: center;
+  }
+  .hero__h1 {
+    font-size: var(--fs-hero);
+    margin-top: var(--sp-4);
+  }
+  .hero__lead { margin-top: var(--sp-6); }
+  .hero__actions {
+    margin-top: var(--sp-8);
+    display: flex;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+  .hero__trust {
+    margin-top: var(--sp-6);
+    font-size: var(--fs-small);
+    color: var(--c-text-muted);
+  }
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Stat strip */
+  .stats {
+    border-block: 1px solid var(--c-border);
+    background: var(--c-surface);
+  }
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-6);
+    padding-block: var(--sp-8);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .stat__value {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+    color: var(--c-text);
+    letter-spacing: -0.02em;
+  }
+  .stat__label {
+    font-family: var(--ff-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .section--alt { background: var(--c-surface); border-block: 1px solid var(--c-border); }
+
+  /* Capabilities */
+  .cap__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+  }
+  .cap {
+    padding: var(--sp-6);
+    border-radius: var(--r-card);
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+  }
+  .cap__icon {
+    display: inline-flex;
+    padding: 0.7rem;
+    border-radius: 12px;
+    background: rgba(109, 94, 246, 0.1);
+    color: var(--c-accent);
+    margin-bottom: var(--sp-4);
+  }
+  .cap__title { font-size: var(--fs-h3); margin-bottom: var(--sp-2); }
+  .cap__body { color: var(--c-text-muted); font-size: var(--fs-small); }
+
+  /* Products */
+  .prod__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-6);
+  }
+
+  /* Studio */
+  .studio__inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--sp-12);
+    align-items: start;
+  }
+  .studio__prose p { color: var(--c-text-muted); margin-top: var(--sp-4); }
+  .studio__prose .lead { color: var(--c-text-muted); }
+  .studio__honesty {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--sp-6) !important;
+    color: var(--c-text) !important;
+    font-weight: 500;
+    font-size: var(--fs-small);
+  }
+  .studio__honesty :global(.icon) { color: var(--c-success); flex: none; }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: var(--sp-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    border-radius: var(--r-card);
+    border: 1px solid var(--c-border);
+    background: var(--c-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .step { display: flex; gap: var(--sp-4); }
+  .step__n {
+    font-family: var(--ff-mono);
+    font-weight: 500;
+    color: var(--c-accent);
+    font-size: 0.9rem;
+    padding-top: 0.15rem;
+  }
+  .step__title { font-size: 1.05rem; margin-bottom: 0.2rem; }
+  .step__body { color: var(--c-text-muted); font-size: var(--fs-small); }
+
+  /* Belief */
+  .belief__inner { max-width: 720px; }
+  .belief__h { margin-top: var(--sp-3); }
+  .belief__lead { margin-top: var(--sp-4); }
+
+  @media (max-width: 900px) {
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__visual { order: -1; }
+    .studio__inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .stats__grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-8) var(--sp-6); }
+    .cap__grid { grid-template-columns: 1fr; }
+    .prod__grid { grid-template-columns: 1fr; }
+  }
+</style>

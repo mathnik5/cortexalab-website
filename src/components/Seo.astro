@@ -1,0 +1,38 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** JSON-LD object(s) to embed. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  ogImage?: string;
+}
+const { title, description, jsonLd, ogImage } = Astro.props;
+
+// Normalize to clean URLs (strip `.html` and any `index`) so canonical, og:url,
+// nav links, and the sitemap all agree.
+const cleanPath = Astro.url.pathname.replace(/\.html$/, '').replace(/\/?index$/, '');
+const canonical = new URL(cleanPath || '/', site.domain).href.replace(/\/$/, '') || site.domain;
+const image = new URL(ogImage ?? site.ogImage, site.domain).href;
+const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.wordmark} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+{blocks.map((block) => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

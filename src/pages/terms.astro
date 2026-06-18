@@ -1,0 +1,55 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site, placeholders } from '../data/site';
+
+const title = `Terms of Use — ${site.wordmark}`;
+const description = `Terms governing use of the ${site.legalName} company website.`;
+---
+<LegalLayout
+  title={title}
+  description={description}
+  heading="Terms of Use"
+  updated={placeholders.legalEffectiveDate.value}
+>
+  <p>
+    These terms govern your use of this company website at cortexalab.com, operated
+    by {site.legalName} ("CortexaLab", "we"). By using the site you agree to them.
+    Use of our individual products is governed by each product's own terms.
+  </p>
+
+  <h2>Use of the site</h2>
+  <p>
+    This website is provided for general information about CortexaLab and its
+    products. You may view and share its content for personal, non-commercial
+    purposes. You may not misuse the site, attempt to disrupt it, or use it
+    unlawfully.
+  </p>
+
+  <h2>Intellectual property</h2>
+  <p>
+    The CortexaLab name, wordmark, content, and design on this site are owned by
+    {site.legalName} unless otherwise stated. Product names such as {site.appName}
+    and any third-party marks remain the property of their respective owners.
+  </p>
+
+  <h2>Links to other sites</h2>
+  <p>
+    This site links to external sites and app-store listings (including
+    planneat.in, Google Play, and the App Store). We are not responsible for the
+    content or policies of those external sites.
+  </p>
+
+  <h2>No warranty</h2>
+  <p>
+    The website is provided "as is" without warranties of any kind. To the extent
+    permitted by law, CortexaLab is not liable for any loss arising from use of the
+    site.
+  </p>
+
+  <h2>Governing law</h2>
+  <p>
+    These terms are governed by the laws of {placeholders.jurisdiction.value}. We may
+    update them from time to time; the effective date above reflects the latest
+    version. Questions: {placeholders.email.value}.
+  </p>
+</LegalLayout>

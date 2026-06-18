@@ -1,0 +1,57 @@
+---
+/**
+ * Decorative neural / node motif: cortex gradient wash + a faint connected-node
+ * line art. Purely decorative (aria-hidden), very low opacity.
+ */
+interface Props {
+  variant?: 'light' | 'ink';
+  class?: string;
+}
+const { variant = 'light', class: cls = '' } = Astro.props;
+---
+<div class={`backdrop backdrop--${variant} ${cls}`} aria-hidden="true">
+  <div class="wash"></div>
+  <svg class="nodes" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+    <g stroke="currentColor" stroke-width="1" fill="none" opacity="0.5">
+      <path d="M120 90 L300 160 L260 320 L120 90" />
+      <path d="M300 160 L520 120 L640 280 L520 120" />
+      <path d="M260 320 L460 380 L640 280" />
+      <path d="M460 380 L560 520 L320 500 L260 320" />
+      <path d="M560 520 L700 460" />
+    </g>
+    <g fill="currentColor">
+      <circle cx="120" cy="90" r="3" />
+      <circle cx="300" cy="160" r="4" />
+      <circle cx="520" cy="120" r="3" />
+      <circle cx="260" cy="320" r="4" />
+      <circle cx="640" cy="280" r="3" />
+      <circle cx="460" cy="380" r="4" />
+      <circle cx="560" cy="520" r="3" />
+      <circle cx="320" cy="500" r="3" />
+      <circle cx="700" cy="460" r="3" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wash {
+    position: absolute;
+    inset: -20%;
+    background: var(--wash-cortex);
+  }
+  .nodes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .backdrop--light .nodes { color: var(--c-accent); opacity: 0.08; }
+  .backdrop--ink .nodes { color: var(--c-accent-300); opacity: 0.14; }
+</style>

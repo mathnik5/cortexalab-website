@@ -1,0 +1,56 @@
+---
+import { links } from '../data/links';
+import Button from './Button.astro';
+import NeuralBackdrop from './NeuralBackdrop.astro';
+
+interface Props {
+  title: string;
+  lead: string;
+}
+const { title, lead } = Astro.props;
+---
+<section class="cta on-ink">
+  <div class="cta__edge" aria-hidden="true"></div>
+  <NeuralBackdrop variant="ink" />
+  <div class="container cta__inner" data-reveal>
+    <h2 class="h2">{title}</h2>
+    <p class="lead">{lead}</p>
+    <div class="cta__actions">
+      <Button href={links.planneat.site} variant="primary" icon="arrow-right" external store="planneat" placement="cta">
+        Explore {''}PlanNEat
+      </Button>
+      <Button href="/contact" variant="onink">Get in touch</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--section-pad);
+  }
+  .cta__edge {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--grad-cortex);
+    z-index: 2;
+  }
+  .cta__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 640px;
+  }
+  .cta__inner .lead {
+    margin: var(--sp-4) auto 0;
+  }
+  .cta__actions {
+    margin-top: var(--sp-8);
+    display: flex;
+    gap: var(--sp-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

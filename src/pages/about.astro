@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CompanyFacts from '../components/CompanyFacts.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+
+import { site, placeholders } from '../data/site';
+import { links } from '../data/links';
+import { process } from '../data/company';
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  alternateName: site.wordmark,
+  url: site.domain,
+  logo: `${site.domain}/logo.png`,
+  email: placeholders.email.value,
+  founder: { '@type': 'Person', name: site.founder },
+  address: { '@type': 'PostalAddress', addressCountry: 'IN', streetAddress: placeholders.address.value },
+  sameAs: [links.planneat.site, links.planneat.googlePlay, links.planneat.appStore],
+};
+
+const title = `How we build — ${site.wordmark}`;
+const description =
+  'CortexaLab is a lean, AI-native studio: one founder, an AI-augmented production pipeline, and real apps shipping on two app stores.';
+---
+<BaseLayout title={title} description={description} jsonLd={orgJsonLd}>
+  <section class="section ahead">
+    <div class="container" data-reveal>
+      <p class="eyebrow">How we build</p>
+      <h1 class="ahead__h">How we build</h1>
+      <p class="lead">
+        A modern, lean studio with enormous leverage — and a human in control of
+        every decision.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container prose" data-reveal>
+      <p>
+        CortexaLab is deliberately small. {site.founder} designs, builds, and ships
+        every product, working alongside modern AI tools as a full production team.
+        It is a new way to make software — lean, fast, and AI-native from the first
+        line of code to the last pixel.
+      </p>
+      <p>
+        We are an AI-native studio in two senses. AI lives inside our apps, doing
+        the tedious thinking for the people who use them. And AI is how we make
+        those apps: product design, engineering, copy, and release work are all
+        AI-augmented, using tools like Codex, Cursor, and Claude Code.
+      </p>
+      <p>
+        That leverage is why one person can ship polished, store-grade apps on both
+        Google Play and the App Store — and keep shipping. We think this is what the
+        next generation of software companies looks like: small teams doing a few
+        things exceptionally well.
+      </p>
+      <p>
+        Being small is not an apology; it is the point. But leverage never means
+        cutting corners. AI assists, and a human owns every decision and reviews
+        every release before it reaches real people.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="h3 process__h" data-reveal>How a product gets made</h2>
+      <ol class="steps" data-reveal-stagger>
+        {process.map((step) => (
+          <li class="step">
+            <span class="step__n">{step.n}</span>
+            <div>
+              <h3 class="step__title">{step.title}</h3>
+              <p class="step__body">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="honesty" data-reveal>
+        <Icon name="check" size={16} /> AI assists; the founder stays in control.
+        Every decision is human-reviewed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="h2 facts__h" data-reveal>The company</h2>
+      <CompanyFacts />
+    </div>
+  </section>
+
+  <Cta
+    title="An AI-native studio, shipping for real."
+    lead="See the products, or get in touch with the founder."
+  />
+</BaseLayout>
+
+<style>
+  .ahead__h { margin: var(--sp-3) 0 var(--sp-4); font-size: var(--fs-hero); }
+  .prose { max-width: 760px; }
+  .prose p { color: var(--c-text-muted); font-size: var(--fs-lead); margin-bottom: var(--sp-6); }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .process__h { margin-bottom: var(--sp-8); }
+  .steps {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6);
+  }
+  .step {
+    display: flex; gap: var(--sp-4);
+    padding: var(--sp-6);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-card);
+    background: var(--c-surface);
+  }
+  .step__n { font-family: var(--ff-mono); color: var(--c-accent); font-size: 0.9rem; }
+  .step__title { font-size: 1.05rem; margin-bottom: 0.2rem; }
+  .step__body { color: var(--c-text-muted); font-size: var(--fs-small); }
+  .honesty {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-top: var(--sp-8); font-weight: 500; font-size: var(--fs-small);
+  }
+  .honesty :global(.icon) { color: var(--c-success); flex: none; }
+  .facts__h { margin-bottom: var(--sp-8); }
+
+  @media (max-width: 820px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>

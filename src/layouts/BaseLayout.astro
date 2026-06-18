@@ -1,0 +1,67 @@
+---
+// Self-hosted fonts (no Google Fonts network calls).
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/jetbrains-mono/500.css';
+
+import '../styles/tokens.css';
+import '../styles/fonts.css';
+import '../styles/global.css';
+
+import { site } from '../data/site';
+import Seo from '../components/Seo.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  ogImage?: string;
+  /** Hide chrome (used for 404 if desired). */
+  bare?: boolean;
+}
+const { title, description, jsonLd, ogImage, bare = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0F1A" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <Seo title={title} description={description} jsonLd={jsonLd} ogImage={ogImage} />
+
+    {site.analytics.enabled && (
+      <Fragment>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${site.analytics.measurementId}`}
+        ></script>
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${site.analytics.measurementId}');
+        `}></script>
+      </Fragment>
+    )}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    {!bare && <Nav />}
+    <main id="main">
+      <slot />
+    </main>
+    {!bare && <Footer />}
+
+    <script>
+      import '../scripts/reveal.ts';
+    </script>
+  </body>
+</html>

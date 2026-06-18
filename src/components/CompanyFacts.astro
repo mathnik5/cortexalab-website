@@ -1,0 +1,97 @@
+---
+import { site } from '../data/site';
+import { companyFacts } from '../data/company';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Render on an ink background. */
+  onInk?: boolean;
+}
+const { onInk = false } = Astro.props;
+---
+<div class={`facts ${onInk ? 'facts--ink' : ''}`}>
+  <div class="facts__intro" data-reveal>
+    <Icon name="building" size={24} class="facts__icon" />
+    <p>
+      {site.legalName} is a private limited company registered in India, building
+      and operating consumer software products including {site.appName}.
+    </p>
+  </div>
+  <dl class="facts__list" data-reveal-stagger>
+    {companyFacts.map((f) => (
+      <div class="facts__row">
+        <dt>{f.label}</dt>
+        <dd class={f.isPlaceholder ? 'is-placeholder' : ''}>
+          {f.value}
+          {f.isPlaceholder && <span class="tbc" title="To be confirmed">·&nbsp;TBC</span>}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</div>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-12);
+    align-items: start;
+  }
+  .facts__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  .facts__intro p {
+    color: var(--c-text-muted);
+    font-size: var(--fs-lead);
+    max-width: 38ch;
+  }
+  .facts__icon { color: var(--c-accent); }
+
+  .facts__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .facts__row {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: var(--sp-4);
+    padding: var(--sp-3) 0;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .facts__row:last-child { border-bottom: 0; }
+  .facts__row dt {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c-text-muted);
+  }
+  .facts__row dd {
+    margin: 0;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--c-text);
+  }
+  .tbc {
+    margin-left: 0.4rem;
+    font-family: var(--ff-mono);
+    font-size: 0.66rem;
+    color: var(--c-warning);
+    letter-spacing: 0.05em;
+  }
+  .is-placeholder { color: var(--c-text-muted); font-weight: 400; }
+
+  .facts--ink .facts__intro p { color: var(--c-text-onink-muted); }
+  .facts--ink .facts__icon { color: var(--c-accent-300); }
+  .facts--ink .facts__row { border-bottom-color: var(--c-border-onink); }
+  .facts--ink .facts__row dt { color: var(--c-text-onink-muted); }
+  .facts--ink .facts__row dd { color: var(--c-text-onink); }
+
+  @media (max-width: 720px) {
+    .facts { grid-template-columns: 1fr; gap: var(--sp-8); }
+    .facts__row { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+</style>

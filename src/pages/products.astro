@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+
+import { site } from '../data/site';
+import { links } from '../data/links';
+import { products, planneat, habitApp } from '../data/products';
+
+const swJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.appName,
+  applicationCategory: 'LifestyleApplication',
+  operatingSystem: 'Android, iOS',
+  url: links.planneat.site,
+  downloadUrl: [links.planneat.googlePlay, links.planneat.appStore],
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+  publisher: { '@type': 'Organization', name: site.legalName },
+};
+
+const title = `Products — ${site.wordmark}`;
+const description =
+  "Focused apps that take everyday decisions off your plate. PlanNEat is live on Google Play and the App Store; a second app is in alpha.";
+---
+<BaseLayout title={title} description={description} jsonLd={swJsonLd}>
+  <section class="section phead">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Products</p>
+      <h1 class="phead__h">Products</h1>
+      <p class="lead">
+        Focused apps that take everyday decisions off your plate. Here's what
+        we've shipped — and what's next.
+      </p>
+    </div>
+  </section>
+
+  <!-- PlanNEat expanded -->
+  <section class="section section--alt">
+    <div class="container detail">
+      <div class="detail__card" data-reveal>
+        <ProductCard product={planneat} placement="products" />
+      </div>
+      <div class="detail__features" data-reveal>
+        <h2 class="h3">Inside {site.appName}</h2>
+        <ul class="flist">
+          {planneat.features?.map((f) => (
+            <li class="fitem">
+              <Icon name="check" size={18} class="fitem__i" />
+              <div>
+                <strong>{f.title}</strong>
+                <span>{f.body}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habit app expanded (placeholder) -->
+  <section class="section">
+    <div class="container">
+      <div class="soon" data-reveal>
+        <div class="soon__card">
+          <ProductCard product={habitApp} placement="products" />
+        </div>
+        <div class="soon__copy">
+          <h2 class="h3">What's next</h2>
+          <p>
+            Our second product is an AI-assisted habit tracker, currently in alpha.
+            Full capabilities and a name will be announced here — the founder is
+            shaping it now.
+          </p>
+          <p class="soon__placeholder">
+            Capabilities and differentiators to be provided. This block is a
+            placeholder until the alpha is ready to show.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Built with intelligence. Designed for everyday life."
+    lead="See what an AI-native studio can ship."
+  />
+</BaseLayout>
+
+<style>
+  .phead__h { margin: var(--sp-3) 0 var(--sp-4); font-size: var(--fs-hero); }
+
+  .detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-12);
+    align-items: start;
+  }
+  .detail__features h2 { margin-bottom: var(--sp-6); }
+  .flist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
+  .fitem { display: flex; gap: var(--sp-3); }
+  .fitem__i { color: var(--c-success); flex: none; margin-top: 0.15rem; }
+  .fitem strong { display: block; font-size: var(--fs-body); }
+  .fitem span { color: var(--c-text-muted); font-size: var(--fs-small); }
+
+  .soon { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: start; }
+  .soon__copy h2 { margin-bottom: var(--sp-4); }
+  .soon__copy p { color: var(--c-text-muted); margin-bottom: var(--sp-4); }
+  .soon__placeholder { font-style: italic; }
+
+  @media (max-width: 820px) {
+    .detail, .soon { grid-template-columns: 1fr; gap: var(--sp-8); }
+  }
+</style>

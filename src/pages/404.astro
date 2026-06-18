@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import NeuralBackdrop from '../components/NeuralBackdrop.astro';
+import { site } from '../data/site';
+
+const title = `Page not found — ${site.wordmark}`;
+const description = 'The page you were looking for could not be found.';
+---
+<BaseLayout title={title} description={description}>
+  <section class="nf">
+    <NeuralBackdrop variant="light" />
+    <div class="container nf__inner">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="nf__h">This page wandered off.</h1>
+      <p class="lead nf__lead">
+        The page you were looking for doesn't exist or has moved. Let's get you
+        back on track.
+      </p>
+      <div class="nf__actions">
+        <Button href="/" variant="primary" icon="arrow-right">Back home</Button>
+        <Button href="/products" variant="secondary">See our products</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    position: relative;
+    overflow: hidden;
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .nf__inner { position: relative; z-index: 1; max-width: 560px; }
+  .nf__h { margin: var(--sp-3) 0 var(--sp-4); font-size: var(--fs-hero); }
+  .nf__lead { margin-inline: auto; }
+  .nf__actions {
+    margin-top: var(--sp-8);
+    display: flex; gap: var(--sp-4); justify-content: center; flex-wrap: wrap;
+  }
+</style>

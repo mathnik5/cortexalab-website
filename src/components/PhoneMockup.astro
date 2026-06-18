@@ -1,0 +1,135 @@
+---
+/**
+ * CSS-drawn phone teaser of PlanNEat, rendered in PlanNEat's OWN forest/cream
+ * colors so it reads as a separate product brand nested inside the company.
+ * No real screenshot required.
+ */
+interface Props {
+  float?: boolean;
+  class?: string;
+}
+const { float = true, class: cls = '' } = Astro.props;
+---
+<div class={`phone ${float ? 'phone--float' : ''} ${cls}`} aria-hidden="true">
+  <div class="phone__frame">
+    <div class="phone__notch"></div>
+    <div class="phone__screen">
+      <div class="pn-top">
+        <span class="pn-brand">PlanNEat</span>
+        <span class="pn-pill">This week</span>
+      </div>
+      <div class="pn-rows">
+        <div class="pn-row"><span class="pn-day">Mon</span><span class="pn-meal">Rajma · Jeera rice</span></div>
+        <div class="pn-row"><span class="pn-day">Tue</span><span class="pn-meal">Dal tadka · Roti</span></div>
+        <div class="pn-row"><span class="pn-day">Wed</span><span class="pn-meal">Bhindi · Roti</span></div>
+        <div class="pn-row"><span class="pn-day">Thu</span><span class="pn-meal">Sambar · Idli</span></div>
+        <div class="pn-row"><span class="pn-day">Fri</span><span class="pn-meal">Chole · Bhature</span></div>
+      </div>
+      <div class="pn-cta">Build grocery list</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone {
+    --pn-w: clamp(220px, 26vw, 280px);
+    width: var(--pn-w);
+    filter: drop-shadow(0 30px 60px rgba(11, 15, 26, 0.28));
+  }
+  .phone--float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .phone--float { animation: none; }
+  }
+
+  .phone__frame {
+    position: relative;
+    border-radius: 36px;
+    padding: 10px;
+    background: linear-gradient(160deg, #14201a, #0c130f);
+    aspect-ratio: 9 / 19;
+  }
+  .phone__notch {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36%;
+    height: 16px;
+    border-radius: var(--r-pill);
+    background: #0c130f;
+    z-index: 2;
+  }
+  .phone__screen {
+    height: 100%;
+    border-radius: 28px;
+    background: var(--p-cream);
+    color: var(--p-text);
+    padding: 1.25rem 0.95rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    overflow: hidden;
+  }
+  .pn-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .pn-brand {
+    font-family: var(--ff-display);
+    font-weight: 700;
+    color: var(--p-forest);
+    font-size: 1.05rem;
+  }
+  .pn-pill {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--p-sage);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--r-pill);
+  }
+  .pn-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
+  }
+  .pn-row {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.5rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    border: 1px solid rgba(45, 80, 56, 0.1);
+  }
+  .pn-day {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--p-sage);
+  }
+  .pn-meal {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--p-text);
+  }
+  .pn-cta {
+    text-align: center;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--p-clay);
+    border-radius: var(--r-pill);
+    padding: 0.6rem;
+  }
+</style>

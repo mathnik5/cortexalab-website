@@ -1,0 +1,143 @@
+---
+import type { Product } from '../data/products';
+import Badge from './Badge.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  product: Product;
+  placement?: string;
+}
+const { product, placement = 'products' } = Astro.props;
+const isPlanneat = product.id === 'planneat';
+
+const storeKey = (label: string): string | undefined => {
+  if (/google play/i.test(label)) return 'google_play';
+  if (/app store/i.test(label)) return 'app_store';
+  return undefined;
+};
+---
+<article class={`pcard ${isPlanneat ? 'pcard--planneat' : 'pcard--soon'} ${product.isPlaceholder ? 'is-placeholder' : ''}`}>
+  <div class="pcard__top">
+    <Badge tone={product.status === 'live' ? 'live' : 'soon'}>{product.badge}</Badge>
+  </div>
+
+  <h3 class="pcard__name">{product.name}</h3>
+  <p class="pcard__tagline">{product.tagline}</p>
+  <p class="pcard__body">{product.body}</p>
+
+  <ul class="pcard__chips" aria-label="Highlights">
+    {product.chips.map((c) => <li class="chip">{c}</li>)}
+  </ul>
+
+  {product.isPlaceholder && (
+    <p class="pcard__note">Details coming soon — full capabilities to be announced.</p>
+  )}
+
+  {product.cta && product.cta.length > 0 && (
+    <div class="pcard__cta">
+      {product.cta.map((c) => {
+        const store = storeKey(c.label);
+        return (
+          <a
+            href={c.href}
+            class="plink"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-store={store}
+            data-placement={store ? placement : undefined}
+          >
+            <span>{c.label}</span>
+            <Icon name="external-link" size={15} />
+          </a>
+        );
+      })}
+    </div>
+  )}
+</article>
+
+<style>
+  .pcard {
+    position: relative;
+    border-radius: var(--r-card);
+    padding: var(--sp-8);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    height: 100%;
+  }
+  .pcard::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+  }
+
+  /* PlanNEat reads in ITS OWN forest/cream brand */
+  .pcard--planneat::before { background: linear-gradient(90deg, var(--p-forest), var(--p-sage)); }
+  .pcard--planneat .pcard__name { color: var(--p-forest); }
+  .pcard--planneat .chip {
+    background: rgba(45, 80, 56, 0.07);
+    border-color: rgba(45, 80, 56, 0.16);
+    color: var(--p-text);
+  }
+  .pcard--planneat .plink { color: var(--p-forest); }
+  .pcard--planneat .plink:hover { color: var(--p-clay); }
+
+  .pcard--soon::before { background: var(--grad-cortex); opacity: 0.5; }
+  .pcard.is-placeholder { opacity: 0.92; }
+  .pcard.is-placeholder .pcard__body,
+  .pcard.is-placeholder .chip { color: var(--c-text-muted); }
+
+  .pcard__top { margin-bottom: var(--sp-2); }
+  .pcard__name {
+    font-size: var(--fs-h3);
+    font-family: var(--ff-display);
+  }
+  .pcard__tagline {
+    font-weight: 500;
+    color: var(--c-text);
+  }
+  .pcard__body {
+    color: var(--c-text-muted);
+    font-size: var(--fs-small);
+  }
+  .pcard__chips {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-2) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .chip {
+    font-size: 0.74rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--r-chip);
+    background: rgba(14, 19, 32, 0.04);
+    border: 1px solid var(--c-border);
+    color: var(--c-text-muted);
+  }
+  .pcard__note {
+    font-size: var(--fs-small);
+    color: var(--c-text-muted);
+    font-style: italic;
+  }
+  .pcard__cta {
+    margin-top: auto;
+    padding-top: var(--sp-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+  }
+  .plink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--fs-small);
+    font-weight: 500;
+  }
+</style>

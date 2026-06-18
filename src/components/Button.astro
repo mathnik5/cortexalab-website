@@ -1,0 +1,103 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'onink';
+  icon?: string;
+  external?: boolean;
+  class?: string;
+  /** analytics: data-store / data-placement */
+  store?: string;
+  placement?: string;
+}
+const {
+  href,
+  variant = 'primary',
+  icon,
+  external = false,
+  class: cls = '',
+  store,
+  placement,
+} = Astro.props;
+
+const rel = external ? 'noopener noreferrer' : undefined;
+const target = external ? '_blank' : undefined;
+---
+<a
+  href={href}
+  class={`btn btn--${variant} ${cls}`}
+  rel={rel}
+  target={target}
+  data-store={store}
+  data-placement={placement}
+>
+  <span><slot /></span>
+  {icon && <Icon name={icon} size={18} />}
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--r-pill);
+    font-family: var(--ff-body);
+    font-weight: 500;
+    font-size: var(--fs-small);
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+      transform var(--t-fast) var(--ease),
+      background var(--t-fast) var(--ease),
+      border-color var(--t-fast) var(--ease),
+      color var(--t-fast) var(--ease);
+    white-space: nowrap;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn :global(.icon) {
+    flex: none;
+  }
+
+  .btn--primary {
+    background: var(--c-accent);
+    color: #fff;
+  }
+  .btn--primary:hover {
+    background: var(--c-accent-700);
+    color: #fff;
+  }
+
+  .btn--secondary {
+    background: var(--c-surface);
+    color: var(--c-text);
+    border-color: var(--c-border-strong);
+  }
+  .btn--secondary:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--c-accent);
+    padding-inline: 0.25rem;
+  }
+  .btn--ghost:hover {
+    color: var(--c-accent-700);
+  }
+
+  .btn--onink {
+    background: rgba(232, 236, 246, 0.06);
+    color: var(--c-text-onink);
+    border-color: var(--c-border-onink);
+  }
+  .btn--onink:hover {
+    background: rgba(232, 236, 246, 0.12);
+    color: var(--c-text-onink);
+  }
+</style>

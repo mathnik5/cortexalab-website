@@ -1,0 +1,146 @@
+---
+import { site } from '../data/site';
+import { links } from '../data/links';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+const navLinks = links.nav;
+---
+<header class="nav" data-nav>
+  <div class="container nav__inner">
+    <a href="/" class="brand" aria-label={`${site.wordmark} home`}>
+      <span class="brand__glyph" aria-hidden="true"></span>
+      <span class="brand__word">{site.wordmark}</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      {navLinks.map((l) => (
+        <a href={l.href} class="nav__link">{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="nav__cta">
+      <Button href={links.planneat.site} variant="primary" external store="planneat" placement="nav">
+        View PlanNEat
+      </Button>
+    </div>
+
+    <button class="nav__toggle" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
+      <Icon name="menu" size={24} class="i-menu" />
+      <Icon name="x" size={24} class="i-close" />
+    </button>
+  </div>
+
+  <div class="nav__mobile" id="mobile-menu" data-menu>
+    <nav aria-label="Mobile">
+      {navLinks.map((l) => (
+        <a href={l.href} class="nav__mlink">{l.label}</a>
+      ))}
+      <Button href={links.planneat.site} variant="primary" external store="planneat" placement="nav-mobile" class="nav__mcta">
+        View PlanNEat
+      </Button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--c-paper) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--t-base) var(--ease), background var(--t-base) var(--ease);
+  }
+  .nav.is-scrolled {
+    border-bottom-color: var(--c-border);
+    background: color-mix(in srgb, var(--c-paper) 92%, transparent);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-6);
+    height: 68px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--c-text);
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+  .brand:hover { color: var(--c-text); }
+  .brand__glyph {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--grad-cortex);
+    box-shadow: 0 0 0 4px rgba(109, 94, 246, 0.12);
+  }
+
+  .nav__links {
+    display: flex;
+    gap: var(--sp-8);
+    margin-left: auto;
+    margin-right: var(--sp-6);
+  }
+  .nav__link {
+    color: var(--c-text-muted);
+    font-size: var(--fs-small);
+    font-weight: 500;
+  }
+  .nav__link:hover { color: var(--c-text); }
+
+  .nav__toggle {
+    display: none;
+    background: none;
+    border: 0;
+    color: var(--c-text);
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+  .nav__toggle .i-close { display: none; }
+  .nav__toggle[aria-expanded='true'] .i-menu { display: none; }
+  .nav__toggle[aria-expanded='true'] .i-close { display: block; }
+
+  .nav__mobile {
+    display: none;
+  }
+
+  @media (max-width: 820px) {
+    .nav__links,
+    .nav__cta { display: none; }
+    .nav__toggle { display: inline-flex; }
+
+    .nav__mobile {
+      display: block;
+      max-height: 0;
+      overflow: hidden;
+      border-top: 1px solid transparent;
+      transition: max-height var(--t-slow) var(--ease), border-color var(--t-slow) var(--ease);
+    }
+    .nav__mobile.is-open {
+      max-height: 360px;
+      border-top-color: var(--c-border);
+    }
+    .nav__mobile nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      padding: var(--sp-4) var(--gutter) var(--sp-6);
+    }
+    .nav__mlink {
+      color: var(--c-text);
+      font-weight: 500;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav__mcta { margin-top: var(--sp-4); align-self: flex-start; }
+  }
+</style>
