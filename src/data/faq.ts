@@ -6,7 +6,7 @@ export const faq = [
   },
   {
     q: 'What does CortexaLab build?',
-    a: 'AI-native productivity apps for everyday life. Our flagship app, PlanNEat, plans a week of home-style Indian meals and builds the grocery list. A second app, an AI-assisted habit tracker, is in alpha.',
+    a: 'AI-native productivity apps for everyday life. Our flagship app, PlanNEat, plans a week of home-style Indian meals and builds the grocery list. A second product, an AI-native productivity app, is in alpha.',
   },
   {
     q: 'What does "AI-native" actually mean here?',

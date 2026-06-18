@@ -60,7 +60,7 @@ export const products: Product[] = [
   },
   {
     id: 'habit',
-    name: 'Habit app',
+    name: 'Productivity app',
     status: 'coming-soon',
     badge: 'IN ALPHA · COMING SOON',
     tagline: 'Tasks, habits, and time in one app.',

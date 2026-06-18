@@ -63,11 +63,11 @@ export const placeholders = {
  * verified email. While `accessKey` is empty, the form falls back to a mailto.
  */
 export const waitlistForm = {
-  accessKey: '', // PLACEHOLDER — paste Web3Forms access key to enable in-form submit
+  accessKey: '4cf28114-ba35-41f9-84d8-a2a5f9d1f1f1', // safe to commit: delivers only to your verified email
   endpoint: 'https://api.web3forms.com/submit',
-  subject: 'New waitlist signup: CortexaLab habit app',
+  subject: 'New waitlist signup: CortexaLab productivity app',
   fallbackMailto:
-    'mailto:info@cortexalab.com?subject=Waitlist%3A%20CortexaLab%20habit%20app',
+    'mailto:info@cortexalab.com?subject=Waitlist%3A%20CortexaLab%20productivity%20app',
 } as const;
 
 /** Structured address parts for JSON-LD PostalAddress (schema.org). */
