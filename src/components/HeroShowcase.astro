@@ -1,0 +1,141 @@
+---
+/*
+ * Hero visual: a real PlanNEat screenshot inside a CSS-drawn phone frame, with
+ * the full-width "day card" popped out in front of the screen. The pop-out (a)
+ * emphasises the card and (b) reveals all four meal columns that are clipped
+ * off the right edge in the actual phone-width view. Both elements float on a
+ * gentle, slightly-parallaxed 7s loop. Pauses under prefers-reduced-motion.
+ */
+import { Image } from 'astro:assets';
+import fullShot from '../assets/screenshots/planner-full.png';
+import topCard from '../assets/screenshots/planner-top-card.png';
+---
+
+<div class="showcase">
+  <div class="phone">
+    <div class="phone__frame">
+      <div class="phone__notch"></div>
+      <div class="phone__screen">
+        <Image
+          class="phone__shot"
+          src={fullShot}
+          alt="The PlanNEat meal-planner app showing a week of planned meals"
+          widths={[300, 600, 900]}
+          sizes="(max-width: 860px) 78vw, 300px"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </div>
+
+  <figure class="showcase__card" aria-hidden="true">
+    <Image
+      class="showcase__card-img"
+      src={topCard}
+      alt=""
+      widths={[360, 720, 1080]}
+      sizes="(max-width: 600px) 92vw, 380px"
+      loading="eager"
+    />
+  </figure>
+</div>
+
+<style>
+  .showcase {
+    /* token fallbacks — cortexalab's globals win when defined */
+    --frame: #11160f;
+
+    position: relative;
+    width: min(300px, 78vw);
+    margin-inline: auto;
+    /* room for the popped-out card to overhang without being clipped */
+    padding-bottom: 2rem;
+    animation: showcase-float 7s var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) infinite;
+  }
+
+  .phone {
+    filter: drop-shadow(0 30px 50px rgba(16, 24, 40, 0.18));
+  }
+
+  .phone__frame {
+    position: relative;
+    aspect-ratio: 300 / 620;
+    background: var(--frame);
+    border-radius: 42px;
+    padding: 12px;
+    box-shadow:
+      inset 0 0 0 2px rgba(255, 255, 255, 0.08),
+      inset 0 0 0 7px #000;
+  }
+
+  .phone__notch {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38%;
+    height: 18px;
+    background: var(--frame);
+    border-radius: var(--r-pill, 9999px);
+    z-index: 2;
+  }
+
+  .phone__screen {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    /* dark inset at the top so the screenshot starts below the camera notch */
+    padding-top: 26px;
+    border-radius: 32px;
+    overflow: hidden;
+    background: var(--frame);
+  }
+  .phone__shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* ---- popped-out full-width day card ---- */
+  .showcase__card {
+    position: absolute;
+    left: 50%;
+    top: 12%;
+    width: 133%;
+    margin: 0;
+    transform: translateX(-50%) rotate(-2deg);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--c-surface, #fffdf6);
+    border: 1px solid var(--c-border, rgba(31, 42, 34, 0.1));
+    box-shadow:
+      0 22px 45px rgba(16, 24, 40, 0.28),
+      0 6px 14px rgba(16, 24, 40, 0.16);
+    animation: card-float 7s var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) infinite;
+  }
+  .showcase__card-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Gentle, slightly-parallaxed float so the card reads as lifted off the
+     screen rather than pasted on. */
+  @keyframes showcase-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  @keyframes card-float {
+    0%, 100% { transform: translateX(-50%) translateY(0) rotate(-2deg); }
+    50%      { transform: translateX(-50%) translateY(-14px) rotate(-2deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .showcase,
+    .showcase__card {
+      animation: none;
+    }
+  }
+</style>
